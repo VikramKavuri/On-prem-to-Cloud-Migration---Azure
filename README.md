@@ -14,9 +14,7 @@
 
 **🎯 Building a Self-Healing, Auto-Scaling Data Pipeline That Transforms Raw SQL Data into Executive Dashboards**
 
-<img src="https://github.com/user-attachments/assets/025b31b9-90cc-4010-9121-85eed5cf138b" style="width: 120%; height: 120%; 
-               margin-top: -30%; 
-              object-fit: cover;"  alt="Azure Architecture" width="900">
+<img src="picture_DE_workflow.png" alt="Azure Architecture" width="900">
 
 </div>
 
