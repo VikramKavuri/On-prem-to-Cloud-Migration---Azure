@@ -484,9 +484,8 @@ improvements = {
 
 *"Every expert was once a beginner who refused to give up"*
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Let's_Connect-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/yourusername)
-[![GitHub](https://img.shields.io/badge/GitHub-Star_This_Repo-100000?style=for-the-badge&logo=github)](https://github.com/yourusername)
-[![Blog](https://img.shields.io/badge/Blog-Read_More-FF5722?style=for-the-badge&logo=hashnode)](https://yourblog.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Let's_Connect-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/thrivikrama-rao-kavuri-7290b6147/)
+[![GitHub](https://img.shields.io/badge/GitHub-Star_This_Repo-100000?style=for-the-badge&logo=github)](https://github.com/VikramKavuri)
 
 **Questions? Ideas? Let's talk data!**  
 📧 your.email@example.com
