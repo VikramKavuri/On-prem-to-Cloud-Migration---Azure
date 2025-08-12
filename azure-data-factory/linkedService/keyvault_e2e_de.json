@@ -1,0 +1,11 @@
+{
+	"name": "keyvault_e2e_de",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://kv-e2e-de.vault.azure.net/"
+		}
+	}
+}
