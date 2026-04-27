@@ -3,14 +3,28 @@
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
+		"parameters": {
+			"serverName": {
+				"type": "String",
+				"defaultValue": "localhost\\SQLEXPRESS"
+			},
+			"databaseName": {
+				"type": "String",
+				"defaultValue": "AdventureWorksLT2022"
+			},
+			"userName": {
+				"type": "String",
+				"defaultValue": "Vikram_kavuri"
+			}
+		},
 		"type": "SqlServer",
 		"typeProperties": {
-			"server": "DESKTOP-VSCM7DE\\SQLEXPRESS",
-			"database": "AdventureWorksLT2022",
+			"server": "@{linkedService().serverName}",
+			"database": "@{linkedService().databaseName}",
 			"encrypt": "optional",
 			"trustServerCertificate": false,
 			"authenticationType": "SQL",
-			"userName": "dbdr",
+			"userName": "@{linkedService().userName}",
 			"password": {
 				"type": "AzureKeyVaultSecret",
 				"store": {

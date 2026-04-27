@@ -3,9 +3,19 @@
 	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
+		"parameters": {
+			"databricksWorkspaceUrl": {
+				"type": "String",
+				"defaultValue": "https://<your-databricks-workspace-url>"
+			},
+			"existingClusterId": {
+				"type": "String",
+				"defaultValue": "<your-cluster-id>"
+			}
+		},
 		"type": "AzureDatabricks",
 		"typeProperties": {
-			"domain": "https://adb-2690968036054434.14.azuredatabricks.net",
+			"domain": "@{linkedService().databricksWorkspaceUrl}",
 			"accessToken": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
@@ -14,7 +24,7 @@
 				},
 				"secretName": "dbwtoken"
 			},
-			"existingClusterId": "0714-153644-9703069z"
+			"existingClusterId": "@{linkedService().existingClusterId}"
 		}
 	}
 }

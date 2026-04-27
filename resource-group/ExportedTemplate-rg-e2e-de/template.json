@@ -278,15 +278,14 @@
                 "managedResourceGroupName": "synapseworkspace-managedrg-58d707a2-4465-4803-93d2-b82a95b1aa65",
                 "sqlAdministratorLogin": "sqladminuser",
                 "privateEndpointConnections": [],
-                "workspaceRepositoryConfiguration": {
-                    "accountName": "alexanderbean",
-                    "collaborationBranch": "main",
-                    "hostName": "https://github.com",
-                    "lastCommitId": "3467f9a794e91d391441564946adf7842446dbdf",
-                    "repositoryName": "E2E-Data-Engineering-in-Azure",
-                    "rootFolder": "/synapse-analytics",
-                    "type": "WorkspaceGitHubConfiguration"
-                },
+				"workspaceRepositoryConfiguration": {
+					"accountName": "Vikram_kavuri",
+					"collaborationBranch": "main",
+					"hostName": "https://github.com",
+					"repositoryName": "On-prem-to-Cloud-Migration---Azure",
+					"rootFolder": "/synapse-analytics",
+					"type": "WorkspaceGitHubConfiguration"
+				},
                 "publicNetworkAccess": "Enabled",
                 "cspWorkspaceAdminProperties": {
                     "initialWorkspaceAdminObjectId": "5470ff9b-e562-4ea5-99b5-3503a11799aa"
@@ -349,21 +348,9 @@
                 "state": "Disabled",
                 "storageAccountSubscriptionId": "00000000-0000-0000-0000-000000000000"
             }
-        },
-        {
-            "type": "Microsoft.Synapse/workspaces/firewallRules",
-            "apiVersion": "2021-06-01",
-            "name": "[concat(parameters('workspaces_synw_e2e_de_name'), '/allowAll')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Synapse/workspaces', parameters('workspaces_synw_e2e_de_name'))]"
-            ],
-            "properties": {
-                "startIpAddress": "0.0.0.0",
-                "endIpAddress": "255.255.255.255"
-            }
-        },
-        {
-            "type": "Microsoft.Synapse/workspaces/integrationruntimes",
+		},
+		{
+			"type": "Microsoft.Synapse/workspaces/integrationruntimes",
             "apiVersion": "2021-06-01",
             "name": "[concat(parameters('workspaces_synw_e2e_de_name'), '/AutoResolveIntegrationRuntime')]",
             "dependsOn": [

@@ -1,13 +1,15 @@
-# Power BI - (pbi-e2e-de)
+# Power BI Dashboard
 
-This results from the ETL pipeline and offers an interactive reporting and analytics experience.
+This folder contains the Power BI report built on top of the Synapse serving layer.
 
-Power BI Desktop loads the data from the "gold_db" table created in Azure Synapse Analytics.
+## Report Source
 
-Why use the Azure Synapse database as the source VS the Gold container in the Data Lake?
-- It's an established best practice to use a database as the serving layer for Power BI reporting.
-- The Synapse database offers greater scalability and easier maintenance than reporting from the Data Lake.
+Power BI connects to the `gold_db` database in Azure Synapse Analytics. Synapse exposes SQL views over the Gold Delta tables, which gives Power BI a stable serving interface without requiring a separate warehouse copy.
 
-The Desktop version is included in this folder to download and experiment with the visualizations. The dashboard is also published to the Power BI Service (and Microsoft Fabric) but cannot be accessed by users outside my organization.
+## Included File
 
-![pbi-dash](https://github.com/user-attachments/assets/571f0eb7-e412-4fb0-a0ef-22acb5b2f13e)
+- `pbi-e2e-de-dashboard.pbix` - Power BI Desktop report file.
+
+The published Power BI Service version is organization-scoped and is not publicly accessible from this repository.
+
+![Power BI dashboard](https://github.com/user-attachments/assets/571f0eb7-e412-4fb0-a0ef-22acb5b2f13e)

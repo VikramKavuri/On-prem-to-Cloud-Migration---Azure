@@ -1,0 +1,19 @@
+# Python caches
+__pycache__/
+*.py[cod]
+
+# Databricks and local notebook exports
+.databricks/
+*.dbc
+
+# Local environment files
+.env
+.env.*
+.venv/
+.venv-video/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

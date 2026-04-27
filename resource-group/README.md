@@ -1,7 +1,12 @@
-# Resource Group - rg-e2e-de
+# Azure Resource Group
 
-This resource group hosted all of the services used in this project.
+This folder documents the Azure resource group used for the project and includes exported deployment assets.
 
-The "ExportedTemplate" folder contains the ARM template for automation and easy deployment. In the next project, I intend to use Terraform as IaC.
+## Included Assets
 
-![resource-group](https://github.com/user-attachments/assets/7c5bc29c-12ac-4ccc-b9d9-e77098e0216f)
+- `ExportedTemplate-rg-e2e-de/` - exported ARM template and parameters from the resource group.
+- `picture_DE_workflow.png` - architecture workflow diagram used in the root README.
+
+The exported ARM template is useful as a reference, but resource names, locations, identities, and secrets should be reviewed before redeploying it in another Azure subscription.
+
+![Resource group](https://github.com/user-attachments/assets/7c5bc29c-12acb-4ccc-b9d9-e77098e0216f)

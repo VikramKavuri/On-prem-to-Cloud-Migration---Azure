@@ -1,21 +1,24 @@
-# Azure Data Factory - (adf-e2e-de)
+# Azure Data Factory
 
-Azure Data Factory was the tool used to engineer most of the extract/transform/load (ETL) pipeline.
+This folder contains the Azure Data Factory assets used to orchestrate the pipeline from on-premises SQL Server to Azure Data Lake Storage Gen2 and Azure Databricks.
 
-**Extract:**
-- Connected to the local SQL server database using the Key Vault secrets assigned for the username and password.
-- Queried for all of the tables in the on-prem database.
-- Copied the tables into the Bronze container in the data lake to undergo transformations.
+## Included Assets
 
-**Transform:**
-- Queued the Databricks notebooks to run and process the Bronze layer data
-- Initially cleansed data from the Bronze layer and loaded to the Silver layer for further transformation.
-- Further refined data from the Silver layer and loaded to Gold layer to be used for reporting and analytics.
+- `factory/` - factory metadata.
+- `linkedService/` - connections for SQL Server, ADLS Gen2, Azure Databricks, and Key Vault.
+- `dataset/` - source SQL and target lake datasets.
+- `pipeline/` - copy and orchestration pipelines.
+- `integrationRuntime/` - self-hosted integration runtime metadata.
+- `trigger/` - scheduled trigger configuration.
+- `publish_config.json` - Data Factory publish configuration.
 
-**Load:**
-- The load piece was completed by Azure Synapse Analytics
-- The Gold layer data was loaded into a serverless SQL database.
+## Pipeline Role
 
-Additionally, a trigger was created to run this pipeline daily--completely automating the refinement of new row/column data.
+1. Connects to the local SQL Server database through a self-hosted integration runtime.
+2. Uses Key Vault-backed linked services for sensitive connection details.
+3. Discovers source tables dynamically from SQL Server metadata.
+4. Copies source tables into the Bronze layer as Parquet.
+5. Starts Databricks notebook activities for Bronze-to-Silver and Silver-to-Gold transformations.
+6. Runs on a daily schedule through the configured trigger.
 
-![adf-pipeline](https://github.com/user-attachments/assets/124ab5d1-e781-4229-9f0b-3dce0bc3806f)
+![ADF pipeline](https://github.com/user-attachments/assets/124ab5d1-e781-4229-9f0b-3dce0bc3806f)

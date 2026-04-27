@@ -6,16 +6,16 @@
             "value": null
         },
         "vaults_kv_e2e_de_name": {
-            "value": null
+            "value": "kv-e2e-de"
         },
         "workspaces_synw_e2e_de_name": {
-            "value": null
+            "value": "synw-e2e-de"
         },
         "workspaces_dbw_e2e_de_name": {
-            "value": null
+            "value": "dbw-e2e-de"
         },
         "storageAccounts_gen2e2ede_name": {
-            "value": null
+            "value": "gen2e2ede"
         }
     }
 }

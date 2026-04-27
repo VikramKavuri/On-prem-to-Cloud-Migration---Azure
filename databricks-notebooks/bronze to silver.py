@@ -1,35 +1,52 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC ### Transformation for all tables (Modifying date/time)
+# MAGIC ## Bronze to Silver Transformation
+# MAGIC
+# MAGIC Reads every table folder in the Bronze SalesLT layer, standardizes date columns,
+# MAGIC and writes each table to the Silver layer in Delta format.
 
 # COMMAND ----------
 
-table_name = []
-
-for i in dbutils.fs.ls('mnt/bronze/SalesLT'):
-  table_name.append(i.name.split('/')[0])
-
-# COMMAND ----------
-
-table_name
-
-# COMMAND ----------
-
-from pyspark.sql.functions import from_utc_timestamp, date_format
+from pyspark.sql.functions import date_format, from_utc_timestamp
 from pyspark.sql.types import TimestampType
 
-for i in table_name:
-    path = '/mnt/bronze/SalesLT/' + i + '/' + i + '.parquet'
-    df = spark.read.format('parquet').load(path)
-    column = df.columns
+BRONZE_BASE_PATH = "/mnt/bronze/SalesLT"
+SILVER_BASE_PATH = "/mnt/silver/SalesLT"
 
-    for col in column:
-        if 'Date' in col or 'date' in col:
-            df = df.withColumn(col, date_format(from_utc_timestamp(df[col].cast(TimestampType()), 'UTC'), 'yyyy-MM-dd'))
 
-    output_path = '/mnt/silver/SalesLT/' + i + '/'
-    df.write.format('delta').mode('overwrite').save(output_path)
+def list_table_names(base_path):
+    return [item.name.rstrip("/") for item in dbutils.fs.ls(base_path)]
+
+
+def standardize_date_columns(df):
+    for column_name in df.columns:
+        if "date" in column_name.lower():
+            df = df.withColumn(
+                column_name,
+                date_format(
+                    from_utc_timestamp(df[column_name].cast(TimestampType()), "UTC"),
+                    "yyyy-MM-dd",
+                ),
+            )
+    return df
+
 
 # COMMAND ----------
 
-display(df)
+table_names = list_table_names(BRONZE_BASE_PATH)
+display(table_names)
+
+# COMMAND ----------
+
+for table_name in table_names:
+    input_path = f"{BRONZE_BASE_PATH}/{table_name}/{table_name}.parquet"
+    output_path = f"{SILVER_BASE_PATH}/{table_name}"
+
+    bronze_df = spark.read.format("parquet").load(input_path)
+    silver_df = standardize_date_columns(bronze_df)
+
+    silver_df.write.format("delta").mode("overwrite").save(output_path)
+
+# COMMAND ----------
+
+display(silver_df)
