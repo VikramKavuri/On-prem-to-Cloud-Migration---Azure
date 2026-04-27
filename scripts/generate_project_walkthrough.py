@@ -237,7 +237,7 @@ def draw_frame(scene_index, scene, frame_index, icons):
     draw = ImageDraw.Draw(frame, "RGBA")
     progress = ease(frame_index / max(1, FPS * SCENE_SECONDS - 1))
 
-    draw.text((54, 42), "On-Premises SQL Server to Azure Data Platform", font=TITLE, fill=INK)
+    draw.text((54, 42), "SQLServer-Azure-DataLakehouse", font=TITLE, fill=INK)
     draw.text((58, 98), "Animated project walkthrough with official Azure icons", font=SUBTITLE, fill=MUTED)
 
     # Header scene card.

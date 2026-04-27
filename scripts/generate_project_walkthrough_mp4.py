@@ -229,7 +229,7 @@ def draw_frame(scene_index, scene, frame_index, icons):
     draw = ImageDraw.Draw(frame, "RGBA")
     progress = ease(frame_index / max(1, FPS * SCENE_SECONDS - 1))
 
-    draw.text((52, 42), "On-Premises SQL Server to Azure Data Platform", font=TITLE, fill=INK)
+    draw.text((52, 42), "SQLServer-Azure-DataLakehouse", font=TITLE, fill=INK)
     draw.text((56, 95), "MP4 walkthrough with Microsoft Azure Architecture Icons", font=SUBTITLE, fill=MUTED)
 
     draw.rounded_rectangle((55, 136, 1225, 187), radius=18, fill=(255, 255, 255), outline=LINE, width=2)

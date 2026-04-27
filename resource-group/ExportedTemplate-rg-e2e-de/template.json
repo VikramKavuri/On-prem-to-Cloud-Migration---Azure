@@ -282,7 +282,7 @@
 					"accountName": "Vikram_kavuri",
 					"collaborationBranch": "main",
 					"hostName": "https://github.com",
-					"repositoryName": "On-prem-to-Cloud-Migration---Azure",
+					"repositoryName": "SQLServer-Azure-DataLakehouse",
 					"rootFolder": "/synapse-analytics",
 					"type": "WorkspaceGitHubConfiguration"
 				},

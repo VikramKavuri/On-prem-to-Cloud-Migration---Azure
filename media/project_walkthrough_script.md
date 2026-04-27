@@ -2,7 +2,7 @@
 
 ## Title
 
-On-Premises SQL Server to Azure Data Platform
+SQLServer-Azure-DataLakehouse
 
 ## Purpose
 
@@ -83,4 +83,3 @@ The result is a secure, automated, and scalable Azure data engineering pipeline 
 
 On-screen text:
 Outcome: faster reporting, cleaner data, and reusable cloud analytics.
-

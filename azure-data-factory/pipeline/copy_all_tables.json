@@ -133,7 +133,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/nani.thrivikram51@gmail.com/On-prem-to-Cloud-Migration---Azure/databricks-notebooks/bronze to silver"
+					"notebookPath": "/Repos/nani.thrivikram51@gmail.com/SQLServer-Azure-DataLakehouse/databricks-notebooks/bronze to silver"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks1",
@@ -160,7 +160,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/nani.thrivikram51@gmail.com/On-prem-to-Cloud-Migration---Azure/databricks-notebooks/silver to gold"
+					"notebookPath": "/Repos/nani.thrivikram51@gmail.com/SQLServer-Azure-DataLakehouse/databricks-notebooks/silver to gold"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks1",

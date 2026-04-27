@@ -1,6 +1,6 @@
-# On-Premises SQL Server to Azure Data Platform
+# SQLServer-Azure-DataLakehouse
 
-End-to-end Azure data engineering project that migrates `AdventureWorksLT` SalesLT data from an on-premises SQL Server database into an Azure lakehouse. The pipeline lands raw data in Azure Data Lake Storage Gen2, transforms it with Azure Databricks and Delta Lake, serves curated data through Azure Synapse serverless SQL, and connects the final layer to Power BI.
+End-to-end Azure data engineering project that migrates `AdventureWorksLT` SalesLT data from an on-premises SQL Server database into an Azure data lakehouse. The pipeline lands raw data in Azure Data Lake Storage Gen2, transforms it with Azure Databricks and Delta Lake, serves curated data through Azure Synapse serverless SQL, and connects the final layer to Power BI.
 
 ## Project Walkthrough
 
