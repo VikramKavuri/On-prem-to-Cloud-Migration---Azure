@@ -4,18 +4,12 @@ End-to-end Azure data engineering project that migrates `AdventureWorksLT` Sales
 
 ## Project Walkthrough
 
-<div align="center">
-  <video controls width="100%" poster="media/project_walkthrough_official_icons_cover.png">
-    <source src="media/project_walkthrough_official_icons.mp4" type="video/mp4">
-  </video>
-</div>
+![Project walkthrough animation](media/project_walkthrough.gif)
 
 <p align="center">
-  <a href="media/project_walkthrough_official_icons.mp4"><strong>Open MP4 walkthrough</strong></a>
+  <a href="media/project_walkthrough_official_icons.mp4"><strong>Open high-quality MP4 walkthrough</strong></a>
   ·
   <a href="media/project_walkthrough_script.md">Read video script</a>
-  ·
-  <a href="media/project_walkthrough.gif">Original GIF version</a>
 </p>
 
 ## Project Overview
