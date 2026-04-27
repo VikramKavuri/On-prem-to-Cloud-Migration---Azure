@@ -8,11 +8,12 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "media" / "project_walkthrough.gif"
 COVER = ROOT / "media" / "project_walkthrough_cover.png"
+ICON_DIR = ROOT / "media" / "icons" / "azure"
 
 WIDTH = 1280
 HEIGHT = 720
 FPS = 12
-SCENE_SECONDS = 7
+SCENE_SECONDS = 4
 FRAME_MS = int(1000 / FPS)
 
 BG = (248, 250, 252)
@@ -58,7 +59,7 @@ SCENES = [
         "title": "Project Goal",
         "subtitle": "Move SalesLT data into a secure Azure lakehouse pipeline.",
         "caption": "Automated ingestion, repeatable transformations, and BI-ready output.",
-        "active": ["source", "adf", "bronze", "silver", "gold", "synapse", "powerbi"],
+        "active": ["source", "ir", "adf", "keyvault", "bronze", "databricks", "silver", "gold", "synapse", "powerbi"],
     },
     {
         "title": "Ingest",
@@ -105,22 +106,22 @@ SCENES = [
         "title": "Outcome",
         "subtitle": "A secure, automated path from on-premises data to business intelligence.",
         "caption": "Faster reporting, cleaner data, less manual work, and reusable cloud analytics.",
-        "active": ["source", "adf", "bronze", "silver", "gold", "synapse", "powerbi"],
+        "active": ["source", "ir", "adf", "keyvault", "bronze", "databricks", "silver", "gold", "synapse", "powerbi"],
     },
 ]
 
 
 NODES = {
-    "source": {"label": "SQL Server\nAdventureWorksLT", "xy": (70, 285, 220, 110), "color": AZURE},
-    "ir": {"label": "Self-hosted IR", "xy": (310, 245, 190, 85), "color": GREEN},
-    "adf": {"label": "Data Factory", "xy": (310, 380, 190, 85), "color": AZURE},
-    "keyvault": {"label": "Key Vault", "xy": (310, 515, 190, 85), "color": GOLD},
-    "bronze": {"label": "Bronze\nRaw Parquet", "xy": (610, 205, 205, 95), "color": GOLD},
-    "databricks": {"label": "Databricks\nPySpark", "xy": (610, 350, 205, 95), "color": RED},
-    "silver": {"label": "Silver\nClean Delta", "xy": (610, 495, 205, 95), "color": MUTED},
-    "gold": {"label": "Gold\nCurated Delta", "xy": (870, 350, 205, 95), "color": PURPLE},
-    "synapse": {"label": "Synapse SQL\nServerless views", "xy": (1015, 235, 205, 95), "color": PURPLE},
-    "powerbi": {"label": "Power BI\nDashboards", "xy": (1015, 485, 205, 95), "color": GOLD},
+    "source": {"xy": (72, 304, 132, 104), "icon": "sql", "color": AZURE},
+    "ir": {"xy": (332, 264, 132, 100), "icon": "ir", "color": GREEN},
+    "adf": {"xy": (332, 394, 132, 100), "icon": "adf", "color": AZURE},
+    "keyvault": {"xy": (332, 504, 132, 100), "icon": "keyvault", "color": GOLD},
+    "bronze": {"xy": (646, 264, 132, 100), "icon": "storage", "color": GOLD, "badge": "B"},
+    "databricks": {"xy": (646, 394, 132, 100), "icon": "databricks", "color": RED},
+    "silver": {"xy": (646, 504, 132, 100), "icon": "storage", "color": MUTED, "badge": "S"},
+    "gold": {"xy": (900, 394, 132, 100), "icon": "storage", "color": PURPLE, "badge": "G"},
+    "synapse": {"xy": (1070, 264, 132, 100), "icon": "synapse", "color": PURPLE},
+    "powerbi": {"xy": (1070, 504, 132, 100), "icon": "powerbi", "color": GOLD},
 }
 
 EDGES = [
@@ -170,7 +171,37 @@ def draw_arrow(draw, start, end, color=LINE, width=3, progress=1.0):
         draw.polygon([end, p1, p2], fill=color)
 
 
-def draw_card(draw, key, active_keys):
+def load_icons():
+    icons = {}
+    missing = []
+    for icon_name in {node["icon"] for node in NODES.values()}:
+        icon_path = ICON_DIR / f"{icon_name}.png"
+        if not icon_path.exists():
+            missing.append(str(icon_path))
+            continue
+        icons[icon_name] = Image.open(icon_path).convert("RGBA")
+
+    if missing:
+        raise FileNotFoundError("Missing icon assets:\n" + "\n".join(missing))
+
+    return icons
+
+
+def muted_icon(icon):
+    muted = icon.copy()
+    alpha = muted.getchannel("A").point(lambda value: int(value * 0.42))
+    muted.putalpha(alpha)
+    return muted
+
+
+def draw_badge(draw, text, xy, fill):
+    x, y = xy
+    draw.ellipse((x, y, x + 30, y + 30), fill=fill, outline=(255, 255, 255), width=3)
+    bbox = draw.textbbox((0, 0), text, font=SMALL)
+    draw.text((x + 15 - (bbox[2] - bbox[0]) / 2, y + 15 - (bbox[3] - bbox[1]) / 2 - 1), text, font=SMALL, fill=(255, 255, 255))
+
+
+def draw_card(frame, draw, key, active_keys, icons):
     node = NODES[key]
     x, y, w, h = node["xy"]
     active = key in active_keys
@@ -181,9 +212,15 @@ def draw_card(draw, key, active_keys):
 
     draw.rounded_rectangle((x + 8, y + 8, x + w + 8, y + h + 8), radius=18, fill=shadow)
     draw.rounded_rectangle((x, y, x + w, y + h), radius=18, fill=fill, outline=outline, width=3 if active else 2)
-    draw.rounded_rectangle((x + 18, y + 22, x + 58, y + 62), radius=10, fill=(*color, 35))
-    draw.ellipse((x + 29, y + 33, x + 47, y + 51), fill=color)
-    draw_wrapped(draw, node["label"], (x + 72, y + 23), LABEL, INK if active else MUTED, 18, spacing=4)
+    draw.rounded_rectangle((x + 16, y + 14, x + w - 16, y + h - 14), radius=16, fill=(*color, 15 if active else 8))
+
+    icon = icons[node["icon"]].resize((68, 68), Image.Resampling.LANCZOS)
+    if not active:
+        icon = muted_icon(icon)
+    frame.paste(icon, (x + w // 2 - 34, y + h // 2 - 34), icon)
+
+    if node.get("badge"):
+        draw_badge(draw, node["badge"], (x + w - 38, y + 8), color)
 
 
 def draw_lake_summary(draw):
@@ -195,13 +232,13 @@ def draw_lake_summary(draw):
     draw.text((840, 636), layers, font=LABEL, fill=PURPLE)
 
 
-def draw_frame(scene_index, scene, frame_index):
+def draw_frame(scene_index, scene, frame_index, icons):
     frame = Image.new("RGB", (WIDTH, HEIGHT), BG)
     draw = ImageDraw.Draw(frame, "RGBA")
     progress = ease(frame_index / max(1, FPS * SCENE_SECONDS - 1))
 
     draw.text((54, 42), "On-Premises SQL Server to Azure Data Platform", font=TITLE, fill=INK)
-    draw.text((58, 98), "Animated project walkthrough", font=SUBTITLE, fill=MUTED)
+    draw.text((58, 98), "Animated project walkthrough with official Azure icons", font=SUBTITLE, fill=MUTED)
 
     # Header scene card.
     draw.rounded_rectangle((55, 140, 1225, 190), radius=18, fill=(255, 255, 255), outline=LINE, width=2)
@@ -218,7 +255,7 @@ def draw_frame(scene_index, scene, frame_index):
         draw_arrow(draw, center(src), center(dst), color=line_color, width=4 if line_color == AZURE else 2, progress=line_progress)
 
     for key in NODES:
-        draw_card(draw, key, active)
+        draw_card(frame, draw, key, active, icons)
 
     draw_lake_summary(draw)
 
@@ -238,10 +275,11 @@ def draw_frame(scene_index, scene, frame_index):
 
 def main():
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    icons = load_icons()
     frames = []
     for scene_index, scene in enumerate(SCENES):
         for frame_index in range(FPS * SCENE_SECONDS):
-            frames.append(draw_frame(scene_index, scene, frame_index))
+            frames.append(draw_frame(scene_index, scene, frame_index, icons))
 
     frames[0].save(
         OUTPUT,
